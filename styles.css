@@ -902,7 +902,24 @@ section {
 }
 
 .event-details .icon {
-  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.event-details .icon svg {
+  width: 20px;
+  height: 20px;
+  color: var(--warm-gold-bright);
+  stroke: var(--warm-gold-bright);
+}
+
+.event-icon-wrapper svg {
+  width: 32px;
+  height: 32px;
+  color: var(--champagne-gold);
+  stroke: var(--champagne-gold);
 }
 
 .event-date-highlight {
