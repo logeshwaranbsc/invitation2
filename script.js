@@ -106,6 +106,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function openDoors() {
       if (isIntroCompleted) return;
+      // Start background audio on user interaction
+      playAudio();
       // Swing the doors open
       if (doorStage) doorStage.classList.add('open');
       burstSparks();
@@ -315,79 +317,54 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* ------------------------------------------------------------------------
-     4. Soft Ambient Web Audio Synthesizer (Romantic Background Sound)
+     4. Background Audio Player & Toggle
      ------------------------------------------------------------------------ */
+  const bgMusic  = document.getElementById('bg-music');
   const audioBtn = document.getElementById('audio-btn');
-  let audioCtx = null;
   let isPlaying = false;
-  let synthNodes = [];
+
+  function playAudio() {
+    if (!bgMusic) return;
+    bgMusic.play().then(() => {
+      isPlaying = true;
+      updateAudioBtnState();
+    }).catch(err => {
+      console.log('Audio playback waiting for user gesture:', err);
+    });
+  }
+
+  function pauseAudio() {
+    if (!bgMusic) return;
+    bgMusic.pause();
+    isPlaying = false;
+    updateAudioBtnState();
+  }
 
   function toggleAudio() {
-    if (!audioCtx) {
-      const AudioContext = window.AudioContext || window.webkitAudioContext;
-      audioCtx = new AudioContext();
-    }
-
-    if (audioCtx.state === 'suspended') {
-      audioCtx.resume();
-    }
-
-    if (!isPlaying) {
-      startAmbientMusic();
-      audioBtn.style.background = 'var(--warm-gold)';
-      audioBtn.style.color = 'var(--burgundy)';
-      isPlaying = true;
+    if (bgMusic && !bgMusic.paused) {
+      pauseAudio();
     } else {
-      stopAmbientMusic();
-      audioBtn.style.background = 'linear-gradient(135deg, var(--deep-maroon), var(--burgundy))';
-      audioBtn.style.color = 'var(--champagne-gold)';
-      isPlaying = false;
+      playAudio();
     }
   }
 
-  function startAmbientMusic() {
-    if (!audioCtx) return;
-    
-    const frequencies = [261.63, 329.63, 392.00, 523.25];
-    
-    frequencies.forEach((freq, idx) => {
-      const osc = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
-
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-
-      const lfo = audioCtx.createOscillator();
-      const lfoGain = audioCtx.createGain();
-      lfo.frequency.setValueAtTime(0.2 + idx * 0.05, audioCtx.currentTime);
-      lfoGain.gain.setValueAtTime(0.02, audioCtx.currentTime);
-      lfo.connect(gain.gain);
-      lfo.start();
-
-      gain.gain.setValueAtTime(0.01, audioCtx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.04, audioCtx.currentTime + 2);
-
-      osc.connect(gain);
-      gain.connect(audioCtx.destination);
-      osc.start();
-
-      synthNodes.push({ osc, gain, lfo });
-    });
-  }
-
-  function stopAmbientMusic() {
-    synthNodes.forEach(({ osc, gain, lfo }) => {
-      if (gain && audioCtx) {
-        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 1);
-        setTimeout(() => {
-          try {
-            osc.stop();
-            lfo.stop();
-          } catch(e) {}
-        }, 1000);
-      }
-    });
-    synthNodes = [];
+  function updateAudioBtnState() {
+    if (!audioBtn) return;
+    if (bgMusic && !bgMusic.paused) {
+      audioBtn.classList.add('playing');
+      audioBtn.setAttribute('title', 'Mute Music');
+      audioBtn.innerHTML = `
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+        </svg>`;
+    } else {
+      audioBtn.classList.remove('playing');
+      audioBtn.setAttribute('title', 'Play Music');
+      audioBtn.innerHTML = `
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M4.27 3L3 4.27l9 9v.28c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4c0-.28.04-.55.1-.81L19.73 21 21 19.73 4.27 3zM14 7h4V3h-6v5.18l2 2V7z"/>
+        </svg>`;
+    }
   }
 
   if (audioBtn) {

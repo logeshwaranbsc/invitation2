@@ -121,6 +121,24 @@ body::before {
   transition: all 0.3s var(--transition-smooth);
 }
 
+.audio-control.playing {
+  background: var(--warm-gold);
+  color: var(--burgundy);
+  border-color: #FFFFFF;
+  animation: musicPulse 2.2s infinite ease-in-out;
+}
+
+@keyframes musicPulse {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(218, 143, 37, 0.5);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 28px rgba(218, 143, 37, 0.85);
+    transform: scale(1.08);
+  }
+}
+
 .audio-control:hover {
   transform: scale(1.1);
   box-shadow: 0 8px 25px rgba(218, 143, 37, 0.4);
