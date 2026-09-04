@@ -260,28 +260,23 @@ section {
 }
 
 /* ==========================================================================
-   FULL-SCREEN WEDDING INTRO OVERLAY (#wedding-intro)
+   PHOTO-BASED TEMPLE DOOR 3D SWING OPEN ANIMATION
    ========================================================================== */
 .wedding-intro-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
+  inset: 0;
   z-index: 10000;
-  background: radial-gradient(circle at center, var(--deep-maroon) 0%, var(--burgundy) 100%);
+  background: #0A0204;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
   overflow: hidden;
-  transition: opacity 1s var(--transition-smooth), filter 1s var(--transition-smooth), transform 1s var(--transition-smooth);
+  transition: opacity 1.2s ease, filter 1.2s ease;
 }
 
 .wedding-intro-overlay.intro-completing {
   opacity: 0;
-  filter: blur(10px);
-  transform: scale(1.05);
+  filter: brightness(3) blur(16px);
   pointer-events: none;
 }
 
@@ -289,131 +284,304 @@ section {
   display: none !important;
 }
 
-/* Video Player */
-.intro-video {
+/* Inner golden glow (the "inside" of the temple) */
+.temple-inner-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 80% 90% at 50% 40%,
+    rgba(255, 200, 80, 0.55) 0%,
+    rgba(218, 143, 37, 0.35) 35%,
+    rgba(84, 28, 32, 0.55) 70%,
+    #0A0204 100%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Invitation card that shows through the opening doors */
+.temple-reveal-card {
+  position: absolute;
+  z-index: 2;
+  width: 88%;
+  max-width: 400px;
+  background: linear-gradient(160deg, #FFFDF9 0%, #FAF0DC 100%);
+  border: 2px solid var(--champagne-gold);
+  border-radius: 22px;
+  padding: 40px 28px;
+  text-align: center;
+  box-shadow:
+    0 0 60px rgba(255, 200, 80, 0.5),
+    0 25px 60px rgba(0, 0, 0, 0.6),
+    inset 0 0 30px rgba(210, 182, 143, 0.15);
+  opacity: 0;
+  transform: scale(0.8) translateY(20px);
+  transition: opacity 0.9s ease 0.7s, transform 0.9s var(--transition-smooth) 0.7s;
+}
+
+.reveal-crest {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  color: var(--warm-gold);
+  letter-spacing: 0.4em;
+  margin-bottom: 10px;
+}
+
+.reveal-names {
+  font-family: var(--font-serif);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--deep-maroon);
+  line-height: 1.2;
+  margin-bottom: 6px;
+}
+
+.reveal-tagline {
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  letter-spacing: 0.3em;
+  color: var(--warm-gold);
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+.reveal-date {
+  font-family: var(--font-serif);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--gold-text);
+  letter-spacing: 0.15em;
+  margin-bottom: 10px;
+}
+
+.reveal-blessing {
+  font-family: var(--font-handwriting);
+  font-size: 1.7rem;
+  color: var(--sage-green);
+}
+
+/* -----------------------------------------------
+   DOOR STAGE — 3D Perspective Container
+   ----------------------------------------------- */
+.door-stage {
+  position: absolute;
+  inset: 0;
+  z-index: 8;
+  display: flex;
+  perspective: 1400px;
+  perspective-origin: 50% 40%;
+  overflow: hidden;
+}
+
+/* Each half-door takes exactly 50vw */
+.door-half {
+  position: relative;
+  width: 50%;
+  height: 100%;
+  overflow: hidden;
+  transform-style: preserve-3d;
+  transition: transform 1.3s cubic-bezier(0.77, 0, 0.175, 1),
+              box-shadow 1.3s ease;
+  will-change: transform;
+}
+
+/* The inner div carries the background image, counter-stretched to full width */
+.door-half-inner {
   position: absolute;
   top: 0;
-  left: 0;
-  width: 100%;
+  width: 200%;          /* shows full image, cropped by parent overflow */
   height: 100%;
-  object-fit: cover;
-  object-position: center;
-  z-index: 1;
+  background-image: url('temple_doors.jpg');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+/* Left half — shows left 50% of image */
+.door-half-left {
+  transform-origin: left center;
+  box-shadow: inset -6px 0 30px rgba(0, 0, 0, 0.6);
+}
+
+.door-image-left {
+  left: 0;            /* anchored at left → shows left portion */
+}
+
+/* Right half — shows right 50% of image */
+.door-half-right {
+  transform-origin: right center;
+  box-shadow: inset 6px 0 30px rgba(0, 0, 0, 0.6);
+}
+
+.door-image-right {
+  right: 0;           /* anchored at right → shows right portion */
+}
+
+/* Central seam glow line */
+.door-seam {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 3px;
+  height: 100%;
+  transform: translateX(-50%);
+  background: linear-gradient(to bottom,
+    transparent 0%,
+    rgba(218, 143, 37, 0.9) 20%,
+    rgba(255, 220, 100, 1) 50%,
+    rgba(218, 143, 37, 0.9) 80%,
+    transparent 100%);
+  box-shadow: 0 0 18px 4px rgba(255, 200, 80, 0.6);
+  z-index: 9;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+}
+
+/* Tap Button — positioned at door handle area */
+.temple-tap-btn {
+  position: absolute;
+  bottom: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  background: linear-gradient(135deg, rgba(218, 143, 37, 0.92), rgba(194, 132, 43, 0.92));
+  backdrop-filter: blur(10px);
+  color: #3A1718;
+  border: 1.5px solid rgba(255, 220, 100, 0.8);
+  border-radius: 50px;
+  padding: 14px 32px;
+  cursor: pointer;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 200, 80, 0.4);
+  animation: doorPulse 2.2s infinite ease-in-out;
+  transition: transform 0.2s ease, opacity 0.4s ease;
+  white-space: nowrap;
+}
+
+.temple-tap-btn:hover {
+  transform: translateX(-50%) scale(1.08);
+}
+
+.tap-bell {
+  font-size: 1.4rem;
+  line-height: 1;
+  animation: bellRing 3s infinite ease-in-out;
+}
+
+.tap-label {
+  font-family: var(--font-display);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+}
+
+@keyframes doorPulse {
+  0%, 100% { box-shadow: 0 8px 30px rgba(0,0,0,0.5), 0 0 15px rgba(255,200,80,0.3); }
+  50% { box-shadow: 0 8px 40px rgba(0,0,0,0.5), 0 0 35px rgba(255,200,80,0.7); }
+}
+
+@keyframes bellRing {
+  0%, 85%, 100% { transform: rotate(0deg); }
+  88% { transform: rotate(-12deg); }
+  91% { transform: rotate(12deg); }
+  94% { transform: rotate(-8deg); }
+  97% { transform: rotate(6deg); }
+}
+
+/* Door Opening State — triggered by JS adding .open to .door-stage */
+.door-stage.open .door-half-left {
+  transform: rotateY(-85deg);
+  box-shadow: none;
+}
+
+.door-stage.open .door-half-right {
+  transform: rotateY(85deg);
+  box-shadow: none;
+}
+
+.door-stage.open .door-seam {
+  opacity: 0;
+}
+
+.door-stage.open .temple-tap-btn {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.door-stage.open ~ .temple-reveal-card,
+.wedding-intro-overlay .door-stage.open ~ * .temple-reveal-card {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+/* When stage has open class, show the card behind it */
+.door-stage.open + .temple-inner-glow + .temple-reveal-card {
+  opacity: 1;
+}
+
+/* Spark particle canvas */
+.door-sparks-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 12;
+  pointer-events: none;
+}
+
+/* Skip button */
+.btn-skip-intro {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  z-index: 20;
+  background: rgba(58, 23, 24, 0.7);
+  backdrop-filter: blur(8px);
+  color: var(--champagne-gold);
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  padding: 9px 18px;
+  border: 1px solid rgba(210, 182, 143, 0.5);
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-skip-intro:hover {
+  background: var(--warm-gold-bright);
+  color: var(--burgundy);
 }
 
 /* Golden Glow Transition Overlay */
 .intro-golden-glow {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(circle at center, rgba(218, 143, 37, 0.45) 0%, rgba(84, 28, 32, 0.85) 100%);
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(255, 200, 80, 0.6) 0%, rgba(255, 255, 255, 0.95) 100%);
   opacity: 0;
-  z-index: 2;
+  z-index: 15;
   pointer-events: none;
-  transition: opacity 0.8s ease-in-out;
+  transition: opacity 0.7s ease;
 }
 
 .wedding-intro-overlay.intro-completing .intro-golden-glow {
   opacity: 1;
 }
 
-/* Fallback Opening Invitation Card */
-.intro-fallback-card {
-  position: relative;
-  z-index: 3;
-  color: var(--ivory);
-  text-align: center;
-  padding: 40px 25px;
-  max-width: 460px;
-  width: 90%;
-  border-radius: 20px;
-  background: rgba(58, 23, 24, 0.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 2px solid var(--champagne-gold);
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.intro-monogram {
-  font-family: var(--font-display);
-  font-size: 1.1rem;
-  color: var(--champagne-gold);
-  letter-spacing: 0.4em;
-  margin-bottom: 12px;
-}
-
-.intro-title {
-  font-size: 2.8rem;
-  color: var(--cream-light);
-  margin-bottom: 8px;
-  line-height: 1.2;
-}
-
-.intro-subtitle {
-  font-family: var(--font-display);
-  font-size: 0.8rem;
-  letter-spacing: 0.3em;
-  color: var(--warm-gold-bright);
-  margin-bottom: 12px;
-}
-
-.intro-date {
-  font-family: var(--font-display);
-  font-size: 1rem;
-  color: var(--champagne-gold);
-  letter-spacing: 0.2em;
-  margin-bottom: 25px;
-}
-
-.btn-open-invitation {
-  padding: 14px 32px;
-  background: linear-gradient(135deg, var(--warm-gold), var(--warm-gold-bright));
-  color: var(--burgundy);
-  font-family: var(--font-display);
-  font-size: 0.85rem;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  border: none;
-  border-radius: 50px;
-  cursor: pointer;
-  box-shadow: 0 8px 25px rgba(218, 143, 37, 0.4);
-  transition: all 0.3s var(--transition-smooth);
-}
-
-.btn-open-invitation:hover {
-  transform: scale(1.06);
-  background: var(--cream-light);
-}
-
-/* Skip Intro Button */
-.btn-skip-intro {
-  position: absolute;
-  bottom: 25px;
-  right: 25px;
-  z-index: 4;
-  background: rgba(58, 23, 24, 0.65);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  color: var(--champagne-gold);
-  font-family: var(--font-display);
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.25em;
-  padding: 10px 20px;
-  border: 1px solid var(--champagne-gold);
-  border-radius: 50px;
-  cursor: pointer;
-  transition: all 0.3s var(--transition-smooth);
-}
-
-.btn-skip-intro:hover {
-  background: var(--warm-gold-bright);
-  color: var(--burgundy);
+@media (max-width: 600px) {
+  .temple-tap-btn {
+    padding: 12px 24px;
+    bottom: 12%;
+  }
+  .tap-label {
+    font-size: 0.75rem;
+  }
+  .reveal-names {
+    font-size: 1.6rem;
+  }
+  .temple-reveal-card {
+    padding: 30px 18px;
+  }
 }
 
 /* ==========================================================================

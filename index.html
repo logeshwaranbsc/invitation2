@@ -10,34 +10,51 @@
 <body>
 
   <!-- ==========================================
-       FULL-SCREEN WEDDING INTRO OVERLAY
+       ROYAL SOUTH INDIAN TEMPLE SCROLL UNVEIL OVERLAY
        ========================================== -->
-  <div id="wedding-intro" class="wedding-intro-overlay" role="dialog" aria-modal="true" aria-label="Wedding Invitation Intro">
-    <!-- Full-Screen Intro Video -->
-    <video id="intro-video" class="intro-video" autoplay muted playsinline preload="auto">
-      <source src="wedding_intro.mp4" type="video/mp4">
-      <source src="wedding_intro.webm" type="video/webm">
-    </video>
+  <div id="wedding-intro" class="wedding-intro-overlay" role="dialog" aria-modal="true" aria-label="Wedding Invitation Temple Intro">
+    
+    <!-- Warm golden glow behind the doors (visible once open) -->
+    <div class="temple-inner-glow"></div>
 
-    <!-- Golden Glow Transition Effect Layer -->
-    <div class="intro-golden-glow" id="intro-glow"></div>
+    <!-- Invitation reveal behind doors -->
+    <div class="temple-reveal-card" id="temple-reveal">
+      <div class="reveal-crest font-display">❖ DM ❖</div>
+      <h2 class="reveal-names font-serif">Dineshkumar & Madhumitha</h2>
+      <p class="reveal-tagline font-display">WEDDING INVITATION</p>
+      <div class="reveal-date font-serif">17 · 09 · 2026</div>
+      <p class="reveal-blessing font-script">With blessings & love</p>
+    </div>
 
-    <!-- Fallback Static Invitation Card (Shown if video fails to play/load) -->
-    <div class="intro-fallback-card" id="intro-fallback" style="display: none;">
-      <div class="intro-monogram">
-        <span>D</span> ❖ <span>M</span>
+    <!-- 3D perspective door stage -->
+    <div class="door-stage" id="door-stage">
+
+      <!-- LEFT DOOR HALF (shows left portion of image) -->
+      <div class="door-half door-half-left" id="door-left">
+        <div class="door-half-inner door-image-left"></div>
       </div>
-      <h1 class="intro-title font-script">Dinesh & Madhumitha</h1>
-      <p class="intro-subtitle">WEDDING INVITATION</p>
-      <p class="intro-date">17 SEPTEMBER 2026</p>
-      <button class="btn-open-invitation" id="btn-open-invitation" aria-label="Open Invitation">
-        OPEN INVITATION
+
+      <!-- RIGHT DOOR HALF (shows right portion of image) -->
+      <div class="door-half door-half-right" id="door-right">
+        <div class="door-half-inner door-image-right"></div>
+      </div>
+
+      <!-- Centre-line seam glow -->
+      <div class="door-seam"></div>
+
+      <!-- Tap prompt badge sits over the door handles area -->
+      <button class="temple-tap-btn" id="temple-tap-btn" aria-label="Tap to open temple doors">
+        <span class="tap-bell">🔔</span>
+        <span class="tap-label">TAP TO OPEN</span>
       </button>
     </div>
 
-    <!-- Skip Intro Control Button -->
+    <!-- Particle sparks on open -->
+    <canvas class="door-sparks-canvas" id="door-sparks"></canvas>
+
+    <!-- Skip Control Button -->
     <button class="btn-skip-intro" id="skip-intro-btn" aria-label="Skip Intro">
-      SKIP INTRO ➔
+      SKIP ➔
     </button>
   </div>
 

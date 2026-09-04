@@ -18,63 +18,79 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function initIntro() {
     if (!introOverlay) return;
-
-    // Lock page scrolling during intro
     document.body.style.overflow = 'hidden';
 
-    // Respect reduced motion preference
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReducedMotion) {
-      completeIntro();
-      return;
-    }
+    if (prefersReducedMotion) { completeIntro(); return; }
 
-    if (introVideo) {
-      // Attempt autoplaying video
-      const playPromise = introVideo.play();
+    const doorStage    = document.getElementById('door-stage');
+    const revealCard   = document.getElementById('temple-reveal');
+    const tapBtn       = document.getElementById('temple-tap-btn');
+    const sparksCanvas = document.getElementById('door-sparks');
 
-      if (playPromise !== undefined) {
-        playPromise.then(() => {
-          // Autoplay succeeded!
-          introVideo.style.display = 'block';
-          if (introFallback) introFallback.style.display = 'none';
-        }).catch(error => {
-          // Autoplay blocked or video missing -> Show luxury fallback card
-          showFallbackScreen();
-        });
-      }
-
-      // Handle video ending naturally
-      introVideo.addEventListener('ended', () => {
-        completeIntro();
-      });
-
-      // Handle video error (e.g., file not found)
-      introVideo.addEventListener('error', () => {
-        showFallbackScreen();
-      });
-    } else {
-      showFallbackScreen();
-    }
-
-    // Attach Event Listeners
-    if (btnSkipIntro) {
-      btnSkipIntro.addEventListener('click', skipIntro);
-    }
-
-    if (btnOpenInvitation) {
-      btnOpenInvitation.addEventListener('click', () => {
-        if (introVideo && introVideo.src) {
-          introVideo.play().then(() => {
-            if (introFallback) introFallback.style.display = 'none';
-          }).catch(() => {
-            completeIntro();
-          });
-        } else {
-          completeIntro();
+    /* ---- Gold spark burst on open ---- */
+    function burstSparks() {
+      if (!sparksCanvas) return;
+      sparksCanvas.width  = window.innerWidth;
+      sparksCanvas.height = window.innerHeight;
+      const ctx = sparksCanvas.getContext('2d');
+      const cx  = sparksCanvas.width  / 2;
+      const cy  = sparksCanvas.height / 2;
+      const particles = Array.from({ length: 80 }, () => ({
+        x: cx, y: cy,
+        vx: (Math.random() - 0.5) * 14,
+        vy: (Math.random() - 0.5) * 14,
+        alpha: 1,
+        size: Math.random() * 4 + 2,
+        hue: Math.random() * 30 + 30
+      }));
+      let frame;
+      (function draw() {
+        ctx.clearRect(0, 0, sparksCanvas.width, sparksCanvas.height);
+        let alive = false;
+        for (const p of particles) {
+          if (p.alpha <= 0) continue;
+          alive = true;
+          p.x += p.vx; p.y += p.vy;
+          p.vx *= 0.95; p.vy *= 0.95;
+          p.alpha -= 0.025;
+          ctx.save();
+          ctx.globalAlpha = Math.max(0, p.alpha);
+          ctx.fillStyle = `hsl(${p.hue}, 90%, 65%)`;
+          ctx.shadowBlur = 10;
+          ctx.shadowColor = `hsl(${p.hue}, 90%, 70%)`;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.restore();
         }
-      });
+        if (alive) frame = requestAnimationFrame(draw);
+      })();
     }
+
+    function openDoors() {
+      if (isIntroCompleted) return;
+      // Open the doors
+      if (doorStage) doorStage.classList.add('open');
+      // Reveal invitation card behind doors
+      if (revealCard) {
+        revealCard.style.opacity = '1';
+        revealCard.style.transform = 'scale(1) translateY(0)';
+      }
+      burstSparks();
+      // After user has a moment to read the card, complete intro
+      setTimeout(completeIntro, 2400);
+    }
+
+    // Attach click to entire stage and tap button
+    if (doorStage)  doorStage.addEventListener('click', (e) => {
+      if (!e.target.closest('#skip-intro-btn')) openDoors();
+    });
+    if (tapBtn) tapBtn.addEventListener('click', (e) => { e.stopPropagation(); openDoors(); });
+
+    if (btnSkipIntro) btnSkipIntro.addEventListener('click', (e) => {
+      e.stopPropagation(); skipIntro();
+    });
   }
 
   function showFallbackScreen() {
