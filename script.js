@@ -106,16 +106,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function openDoors() {
       if (isIntroCompleted) return;
-      // Open the doors
+      // Swing the doors open
       if (doorStage) doorStage.classList.add('open');
-      // Reveal invitation card behind doors
-      if (revealCard) {
-        revealCard.style.opacity = '1';
-        revealCard.style.transform = 'scale(1) translateY(0)';
-      }
       burstSparks();
-      // After user has a moment to read the card, complete intro
-      setTimeout(completeIntro, 2400);
+      // Navigate to hero section as soon as doors finish swinging
+      setTimeout(completeIntro, 900);
     }
 
     // Attach click to entire stage and tap button
@@ -151,7 +146,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Trigger scroll reveal observers on main website
       triggerInitialReveals();
-    }, 1000);
+    }, 600);
   }
 
   function skipIntro() {
