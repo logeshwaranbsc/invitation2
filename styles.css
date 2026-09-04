@@ -461,42 +461,44 @@ section {
 
 .door-invite-greeting {
   font-family: var(--font-sans);
-  font-size: 0.7rem;
-  font-weight: 300;
-  letter-spacing: 0.2em;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: rgba(245, 224, 178, 0.85);
+  color: #FFFFFF;
   margin: 0;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
 }
 
 .door-invite-names {
   font-family: var(--font-display);
-  font-size: clamp(2.2rem, 8vw, 3.4rem);
+  font-size: clamp(2.3rem, 8.5vw, 3.6rem);
   font-weight: 800;
-  color: var(--champagne-gold);
+  color: #FFFFFF;
   line-height: 1.1;
   margin: 4px 0;
   text-shadow:
-    0 2px 20px rgba(0, 0, 0, 0.8),
-    0 0 40px rgba(218, 143, 37, 0.5);
+    0 2px 20px rgba(0, 0, 0, 0.95),
+    0 0 35px rgba(255, 255, 255, 0.4);
   letter-spacing: 0.03em;
 }
 
 .door-invite-heart {
-  color: #E8A0A0;
-  font-size: 0.75em;
+  color: #FF8A8A;
+  font-size: 0.8em;
   vertical-align: middle;
   margin: 0 4px;
-  text-shadow: 0 0 18px rgba(220, 100, 100, 0.5);
+  text-shadow: 0 0 18px rgba(255, 120, 120, 0.8);
 }
 
 .door-invite-date {
   font-family: var(--font-serif);
-  font-size: 0.85rem;
-  font-style: italic;
-  color: rgba(210, 182, 143, 0.85);
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: #FAF6F0;
   margin: 0;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
 }
 
 /* Hide invite header when doors open */
@@ -510,10 +512,12 @@ section {
     padding: 20px 16px 32px;
   }
   .door-invite-greeting {
-    font-size: 0.62rem;
+    font-size: 0.65rem;
+    font-weight: 600;
   }
   .door-invite-date {
-    font-size: 0.78rem;
+    font-size: 0.82rem;
+    font-weight: 600;
   }
 }
 
@@ -528,9 +532,9 @@ section {
   flex-direction: column;
   align-items: center;
   gap: 5px;
-  background: transparent;
-  color: var(--champagne-gold);
-  border: 1.5px solid var(--champagne-gold);
+  background: rgba(10, 5, 2, 0.35);
+  color: #FFFFFF;
+  border: 1.5px solid #FFFFFF;
   border-radius: 50px;
   padding: 14px 38px;
   cursor: pointer;
@@ -538,50 +542,50 @@ section {
 
   /* Double ring effect via box-shadow */
   box-shadow:
-    0 0 0 4px rgba(210, 182, 143, 0.12),
-    0 0 0 7px rgba(218, 143, 37, 0.18),
-    0 0 25px 4px rgba(218, 143, 37, 0.35),
-    inset 0 0 20px rgba(218, 143, 37, 0.05);
+    0 0 0 4px rgba(255, 255, 255, 0.2),
+    0 0 0 7px rgba(218, 143, 37, 0.3),
+    0 0 25px 4px rgba(255, 220, 150, 0.5),
+    inset 0 0 20px rgba(255, 255, 255, 0.1);
 
   animation: ringPulse 2.4s infinite ease-in-out;
   transition: transform 0.2s ease, box-shadow 0.3s ease;
-  backdrop-filter: blur(4px);
+  backdrop-filter: blur(6px);
 }
 
 .temple-tap-btn:hover {
   transform: translateX(-50%) scale(1.06);
   box-shadow:
-    0 0 0 4px rgba(210, 182, 143, 0.2),
-    0 0 0 8px rgba(218, 143, 37, 0.3),
-    0 0 40px 8px rgba(218, 143, 37, 0.5),
-    inset 0 0 25px rgba(218, 143, 37, 0.1);
+    0 0 0 4px rgba(255, 255, 255, 0.3),
+    0 0 0 8px rgba(218, 143, 37, 0.4),
+    0 0 40px 8px rgba(255, 220, 150, 0.7),
+    inset 0 0 25px rgba(255, 255, 255, 0.2);
 }
 
 @keyframes ringPulse {
   0%, 100% {
     box-shadow:
-      0 0 0 4px rgba(210, 182, 143, 0.12),
-      0 0 0 7px rgba(218, 143, 37, 0.15),
-      0 0 20px 4px rgba(218, 143, 37, 0.3),
-      inset 0 0 20px rgba(218, 143, 37, 0.04);
+      0 0 0 4px rgba(255, 255, 255, 0.2),
+      0 0 0 7px rgba(218, 143, 37, 0.25),
+      0 0 20px 4px rgba(255, 220, 150, 0.4),
+      inset 0 0 20px rgba(255, 255, 255, 0.08);
   }
   50% {
     box-shadow:
-      0 0 0 6px rgba(210, 182, 143, 0.2),
-      0 0 0 11px rgba(218, 143, 37, 0.22),
-      0 0 45px 10px rgba(218, 143, 37, 0.55),
-      inset 0 0 30px rgba(218, 143, 37, 0.08);
+      0 0 0 6px rgba(255, 255, 255, 0.35),
+      0 0 0 11px rgba(218, 143, 37, 0.35),
+      0 0 45px 10px rgba(255, 220, 150, 0.75),
+      inset 0 0 30px rgba(255, 255, 255, 0.15);
   }
 }
 
 .tap-label {
   font-family: var(--font-sans);
-  font-size: 0.75rem;
-  font-weight: 700;
+  font-size: 0.78rem;
+  font-weight: 800;
   letter-spacing: 0.35em;
   text-transform: uppercase;
-  color: var(--champagne-gold);
-  text-shadow: 0 0 12px rgba(218, 143, 37, 0.6);
+  color: #FFFFFF;
+  text-shadow: 0 0 12px rgba(255, 255, 255, 0.8), 0 2px 6px rgba(0, 0, 0, 0.9);
 }
 
 /* Door Opening State — triggered by JS adding .open to .door-stage */
