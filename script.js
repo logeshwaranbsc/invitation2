@@ -2,23 +2,59 @@
    Dineshkumar ♥ Madhumitha - Wedding Invitation JavaScript Logic
    ========================================================================== */
 
+/* ==========================================================================
+   Wedding Intro Controller
+   ========================================================================== */
 document.addEventListener('DOMContentLoaded', () => {
-
-  /* ------------------------------------------------------------------------
-     0. Wedding Intro Experience State Controller (Full-Screen Overlay)
-     States: INTRO_LOADING -> INTRO_PLAYING / FALLBACK_WAITING -> INTRO_COMPLETING -> MAIN_WEBSITE
-     ------------------------------------------------------------------------ */
-  const introOverlay = document.getElementById('wedding-intro');
-  const introVideo = document.getElementById('intro-video');
-  const introFallback = document.getElementById('intro-fallback');
+  const introOverlay      = document.getElementById('wedding-intro');
+  const introVideo        = document.getElementById('intro-video');
+  const introFallback     = document.getElementById('intro-fallback');
   const btnOpenInvitation = document.getElementById('btn-open-invitation');
-  const btnSkipIntro = document.getElementById('skip-intro-btn');
+  const btnSkipIntro      = document.getElementById('skip-intro-btn');
 
   let isIntroCompleted = false;
 
+  /* ---- Scroll lock helpers ---- */
+  let savedScrollY = 0;
+
+  function lockScroll() {
+    savedScrollY = window.scrollY;
+    document.body.style.overflow = 'hidden';
+    document.body.style.position = 'fixed';
+    document.body.style.top      = `-${savedScrollY}px`;
+    document.body.style.width    = '100%';
+    document.body.style.left     = '0';
+    
+    // Block scroll interaction
+    window.addEventListener('wheel', preventDefault, { passive: false });
+    window.addEventListener('touchmove', preventDefault, { passive: false });
+    window.addEventListener('keydown', preventKeys, false);
+  }
+
+  function unlockScroll() {
+    document.body.style.overflow = '';
+    document.body.style.position = '';
+    document.body.style.top      = '';
+    document.body.style.width    = '';
+    document.body.style.left     = '';
+    // Always start from the top after the intro
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    
+    window.removeEventListener('wheel', preventDefault);
+    window.removeEventListener('touchmove', preventDefault);
+    window.removeEventListener('keydown', preventKeys);
+  }
+
+  function preventDefault(e) { e.preventDefault(); }
+  function preventKeys(e) {
+    if (['ArrowUp', 'ArrowDown', 'Space', 'PageUp', 'PageDown', 'Home', 'End'].includes(e.code)) {
+      e.preventDefault();
+    }
+  }
+
   function initIntro() {
     if (!introOverlay) return;
-    document.body.style.overflow = 'hidden';
+    lockScroll();
 
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (prefersReducedMotion) { completeIntro(); return; }
@@ -102,7 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (isIntroCompleted || !introOverlay) return;
     isIntroCompleted = true;
 
-    // Cinematic 1000ms golden glow & blur fade transition
+    // Cinematic golden glow & blur fade transition
     introOverlay.classList.add('intro-completing');
 
     if (introVideo && !introVideo.paused) {
@@ -111,7 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     setTimeout(() => {
       introOverlay.classList.add('intro-hidden');
-      document.body.style.overflow = 'auto';
+      unlockScroll();           // restore scroll & jump to top
 
       // Trigger scroll reveal observers on main website
       triggerInitialReveals();
