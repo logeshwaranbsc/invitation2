@@ -14,7 +14,7 @@
    --warm-gold: #C2842B (Highlights & countdown CTAs)
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600;1,700&family=Great+Vibes&family=Montserrat:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Dancing+Script:wght@400;500;600;700&family=Lato:wght@300;400;700&display=swap');
 
 :root {
   --ivory: #F8F5EE;
@@ -36,10 +36,10 @@
   --text-light: #FDFBF7;
   --text-muted: #7E6B65;
   
-  --font-serif: 'Cormorant Garamond', Georgia, serif;
-  --font-display: 'Cinzel', serif;
-  --font-handwriting: 'Great Vibes', cursive;
-  --font-sans: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-serif:        'EB Garamond', Georgia, serif;
+  --font-display:      'Playfair Display', Georgia, serif;
+  --font-handwriting:  'Dancing Script', cursive;
+  --font-sans:         'Lato', -apple-system, BlinkMacSystemFont, sans-serif;
   
   --gold-border: 1px solid rgba(194, 132, 43, 0.35);
   --gold-glow: 0 0 20px rgba(218, 143, 37, 0.25);
@@ -174,10 +174,10 @@ section {
 }
 
 .section-title {
-  font-size: 2.2rem;
+  font-size: 2rem;
   color: var(--deep-maroon);
   text-transform: uppercase;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.08em;
   position: relative;
   display: inline-block;
   margin-bottom: 12px;
@@ -185,7 +185,7 @@ section {
 
 .section-subtitle {
   font-family: var(--font-handwriting);
-  font-size: 2.8rem;
+  font-size: 2.2rem;
   color: var(--sage-green);
   display: block;
   margin-top: -5px;
@@ -670,11 +670,12 @@ section {
 
 .hero-couple-names {
   font-family: var(--font-serif);
-  font-size: 3.4rem;
+  font-size: 3rem;
   font-weight: 700;
+  font-style: italic;
   color: var(--deep-maroon);
-  line-height: 1.15;
-  letter-spacing: 0.02em;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
   margin-bottom: 22px;
 }
 
@@ -741,9 +742,9 @@ section {
 }
 
 .scroll-explore span {
-  font-family: var(--font-display);
-  font-size: 0.7rem;
-  letter-spacing: 0.3em;
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
   margin-bottom: 6px;
   opacity: 0.9;
