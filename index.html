@@ -9,7 +9,9 @@
     content="Wedding Invitation of Dineshkumar ♥ Madhumitha - 17 September 2026 at Sri Kutch Kadva Patidar Sanatan Samaj, Trichy.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;0,800;1,400;1,600&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Dancing+Script:wght@500;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;0,800;1,400;1,600&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Dancing+Script:wght@500;600;700&family=Lato:wght@300;400;700&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 
@@ -49,6 +51,16 @@
       <!-- Centre-line seam glow -->
       <div class="door-seam"></div>
 
+      <!-- Couple invite overlay — top of door -->
+      <div class="door-invite-header">
+        <p class="door-invite-greeting font-sans">You are cordially invited to the wedding of</p>
+        <h1 class="door-invite-names font-display">Dinesh
+          <span class="door-invite-heart">♥</span>
+          Madhu
+        </h1>
+        <p class="door-invite-date font-serif">17 September 2026 · Trichy</p>
+      </div>
+
       <!-- Tap prompt badge sits over the door handles area -->
       <button class="temple-tap-btn" id="temple-tap-btn" aria-label="Tap to open temple doors">
         <span class="tap-label">TAP TO OPEN</span>
@@ -58,10 +70,6 @@
     <!-- Particle sparks on open -->
     <canvas class="door-sparks-canvas" id="door-sparks"></canvas>
 
-    <!-- Skip Control Button -->
-    <button class="btn-skip-intro" id="skip-intro-btn" aria-label="Skip Intro">
-      SKIP ➔
-    </button>
   </div>
 
   <!-- Floating Falling Confetti & Rose Petals Canvas -->
@@ -174,8 +182,9 @@
         <span class="event-badge">EVENT 01</span>
         <div class="event-icon-wrapper">
           <!-- Champagne glasses / celebration icon -->
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M8 22V12M16 22V12M5 7l3 5h8l3-5H5zM8 12c0 0-1 1-1 3s1 3 1 3M16 12c0 0 1 1 1 3s-1 3-1 3M9 22h6"/>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M8 22V12M16 22V12M5 7l3 5h8l3-5H5zM8 12c0 0-1 1-1 3s1 3 1 3M16 12c0 0 1 1 1 3s-1 3-1 3M9 22h6" />
           </svg>
         </div>
         <p class="font-script" style="font-size: 2rem; color: var(--sage-green);">A Warm Welcome</p>
@@ -184,19 +193,33 @@
         <ul class="event-details">
           <li>
             <span class="icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2" />
+                <line x1="16" y1="2" x2="16" y2="6" />
+                <line x1="8" y1="2" x2="8" y2="6" />
+                <line x1="3" y1="10" x2="21" y2="10" />
+              </svg>
             </span>
             <span class="event-date-highlight">16 September 2026</span>
           </li>
           <li>
             <span class="icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10" />
+                <polyline points="12 6 12 12 16 14" />
+              </svg>
             </span>
             <span>Wednesday · 7:00 PM onwards</span>
           </li>
           <li>
             <span class="icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z" />
+                <circle cx="12" cy="10" r="3" />
+              </svg>
             </span>
             <span class="event-venue-name">Sri Kutch Kadva Patidar Sanatan Samaj</span>
           </li>
@@ -208,10 +231,11 @@
         <span class="event-badge">EVENT 02</span>
         <div class="event-icon-wrapper">
           <!-- Wedding rings icon -->
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="8" cy="13" r="5"/>
-            <circle cx="16" cy="13" r="5"/>
-            <path d="M11.5 10.5l1 1M12.5 11.5l1 1"/>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+            stroke-linejoin="round">
+            <circle cx="8" cy="13" r="5" />
+            <circle cx="16" cy="13" r="5" />
+            <path d="M11.5 10.5l1 1M12.5 11.5l1 1" />
           </svg>
         </div>
         <p class="font-script" style="font-size: 2rem; color: var(--sage-green);">The Big Day</p>
@@ -220,19 +244,33 @@
         <ul class="event-details">
           <li>
             <span class="icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2" />
+                <line x1="16" y1="2" x2="16" y2="6" />
+                <line x1="8" y1="2" x2="8" y2="6" />
+                <line x1="3" y1="10" x2="21" y2="10" />
+              </svg>
             </span>
             <span class="event-date-highlight">17 September 2026</span>
           </li>
           <li>
             <span class="icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10" />
+                <polyline points="12 6 12 12 16 14" />
+              </svg>
             </span>
             <span>Thursday · 9:00 AM – 10:00 AM</span>
           </li>
           <li>
             <span class="icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z" />
+                <circle cx="12" cy="10" r="3" />
+              </svg>
             </span>
             <span class="event-venue-name">Sri Kutch Kadva Patidar Sanatan Samaj</span>
           </li>

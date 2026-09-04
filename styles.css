@@ -436,59 +436,152 @@ section {
   transition: opacity 0.5s ease;
 }
 
-/* Tap Button — positioned at door handle area */
+/* Couple Invite Header — centered vertically on the temple door */
+.door-invite-header {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  transform: translateY(-65%);    /* pull up slightly above true center */
+  z-index: 10;
+  padding: 32px 24px 36px;
+  text-align: center;
+  background: radial-gradient(
+    ellipse 90% 70% at 50% 50%,
+    rgba(6, 1, 2, 0.78) 0%,
+    rgba(6, 1, 2, 0.45) 55%,
+    transparent 100%
+  );
+  pointer-events: none;           /* let clicks pass through to door */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.door-invite-greeting {
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  font-weight: 300;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(245, 224, 178, 0.85);
+  margin: 0;
+}
+
+.door-invite-names {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 8vw, 3.4rem);
+  font-weight: 800;
+  color: var(--champagne-gold);
+  line-height: 1.1;
+  margin: 4px 0;
+  text-shadow:
+    0 2px 20px rgba(0, 0, 0, 0.8),
+    0 0 40px rgba(218, 143, 37, 0.5);
+  letter-spacing: 0.03em;
+}
+
+.door-invite-heart {
+  color: #E8A0A0;
+  font-size: 0.75em;
+  vertical-align: middle;
+  margin: 0 4px;
+  text-shadow: 0 0 18px rgba(220, 100, 100, 0.5);
+}
+
+.door-invite-date {
+  font-family: var(--font-serif);
+  font-size: 0.85rem;
+  font-style: italic;
+  color: rgba(210, 182, 143, 0.85);
+  margin: 0;
+  letter-spacing: 0.08em;
+}
+
+/* Hide invite header when doors open */
+.door-stage.open .door-invite-header {
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+@media (max-width: 480px) {
+  .door-invite-header {
+    padding: 20px 16px 32px;
+  }
+  .door-invite-greeting {
+    font-size: 0.62rem;
+  }
+  .door-invite-date {
+    font-size: 0.78rem;
+  }
+}
+
+/* Tap Button — glowing gold ring style */
 .temple-tap-btn {
   position: absolute;
-  bottom: 15%;
+  bottom: 8%;
   left: 50%;
   transform: translateX(-50%);
   z-index: 10;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
-  background: linear-gradient(135deg, rgba(218, 143, 37, 0.92), rgba(194, 132, 43, 0.92));
-  backdrop-filter: blur(10px);
-  color: #3A1718;
-  border: 1.5px solid rgba(255, 220, 100, 0.8);
+  gap: 5px;
+  background: transparent;
+  color: var(--champagne-gold);
+  border: 1.5px solid var(--champagne-gold);
   border-radius: 50px;
-  padding: 14px 32px;
+  padding: 14px 38px;
   cursor: pointer;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 200, 80, 0.4);
-  animation: doorPulse 2.2s infinite ease-in-out;
-  transition: transform 0.2s ease, opacity 0.4s ease;
   white-space: nowrap;
+
+  /* Double ring effect via box-shadow */
+  box-shadow:
+    0 0 0 4px rgba(210, 182, 143, 0.12),
+    0 0 0 7px rgba(218, 143, 37, 0.18),
+    0 0 25px 4px rgba(218, 143, 37, 0.35),
+    inset 0 0 20px rgba(218, 143, 37, 0.05);
+
+  animation: ringPulse 2.4s infinite ease-in-out;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+  backdrop-filter: blur(4px);
 }
 
 .temple-tap-btn:hover {
-  transform: translateX(-50%) scale(1.08);
+  transform: translateX(-50%) scale(1.06);
+  box-shadow:
+    0 0 0 4px rgba(210, 182, 143, 0.2),
+    0 0 0 8px rgba(218, 143, 37, 0.3),
+    0 0 40px 8px rgba(218, 143, 37, 0.5),
+    inset 0 0 25px rgba(218, 143, 37, 0.1);
 }
 
-.tap-bell {
-  font-size: 1.4rem;
-  line-height: 1;
-  animation: bellRing 3s infinite ease-in-out;
+@keyframes ringPulse {
+  0%, 100% {
+    box-shadow:
+      0 0 0 4px rgba(210, 182, 143, 0.12),
+      0 0 0 7px rgba(218, 143, 37, 0.15),
+      0 0 20px 4px rgba(218, 143, 37, 0.3),
+      inset 0 0 20px rgba(218, 143, 37, 0.04);
+  }
+  50% {
+    box-shadow:
+      0 0 0 6px rgba(210, 182, 143, 0.2),
+      0 0 0 11px rgba(218, 143, 37, 0.22),
+      0 0 45px 10px rgba(218, 143, 37, 0.55),
+      inset 0 0 30px rgba(218, 143, 37, 0.08);
+  }
 }
 
 .tap-label {
-  font-family: var(--font-display);
-  font-size: 0.82rem;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
   font-weight: 700;
-  letter-spacing: 0.25em;
+  letter-spacing: 0.35em;
   text-transform: uppercase;
-}
-
-@keyframes doorPulse {
-  0%, 100% { box-shadow: 0 8px 30px rgba(0,0,0,0.5), 0 0 15px rgba(255,200,80,0.3); }
-  50% { box-shadow: 0 8px 40px rgba(0,0,0,0.5), 0 0 35px rgba(255,200,80,0.7); }
-}
-
-@keyframes bellRing {
-  0%, 85%, 100% { transform: rotate(0deg); }
-  88% { transform: rotate(-12deg); }
-  91% { transform: rotate(12deg); }
-  94% { transform: rotate(-8deg); }
-  97% { transform: rotate(6deg); }
+  color: var(--champagne-gold);
+  text-shadow: 0 0 12px rgba(218, 143, 37, 0.6);
 }
 
 /* Door Opening State — triggered by JS adding .open to .door-stage */
